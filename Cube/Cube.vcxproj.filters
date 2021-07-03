@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{25a60951-f86d-4ece-983d-edd0d08e049f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include">
+      <UniqueIdentifier>{cfb4151c-898f-4c5f-b56c-78022ad533c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{77151171-d80d-4c04-baca-604f4a4b410a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectX12">
+      <UniqueIdentifier>{ac6e475b-899a-4cf7-bb6e-9dd1f904d751}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gainput">
+      <UniqueIdentifier>{54981f5a-b9fa-4169-9789-586f75be8c5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gainput\Header Files">
+      <UniqueIdentifier>{0a916c63-4cff-40a0-8286-08d82913664a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Device.cpp">
+      <Filter>DirectX12</Filter>
+    </ClCompile>
+    <ClCompile Include="AppWorks.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Window.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Device.h">
+      <Filter>DirectX12</Filter>
+    </ClInclude>
+    <ClInclude Include="d3dx12.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="directX12.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX12Helper.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="AppWorks.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\gestures\GainputButtonStickGesture.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\gestures\GainputDoubleClickGesture.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\gestures\GainputGestures.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\gestures\GainputHoldGesture.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\gestures\GainputPinchGesture.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\gestures\GainputRotateGesture.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\gestures\GainputSimultaneouslyDownGesture.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\gestures\GainputTapGesture.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\recorder\GainputInputPlayer.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\recorder\GainputInputRecorder.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\recorder\GainputInputRecording.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\gainput.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\GainputAllocator.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\GainputContainers.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\GainputDebugRenderer.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\GainputHelpers.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\GainputInputDeltaState.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\GainputInputDevice.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\GainputInputDeviceBuiltIn.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\GainputInputDeviceKeyboard.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\GainputInputDeviceMouse.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\GainputInputDevicePad.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\GainputInputDeviceTouch.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\GainputInputListener.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\GainputInputManager.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\GainputInputMap.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\GainputInputState.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\GainputIos.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\GainputLog.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\extern\gainput\lib\include\gainput\GainputMapFilters.h">
+      <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
