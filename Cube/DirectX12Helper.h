@@ -39,6 +39,9 @@
 #include <Windows.h> // For HRESULT
 #include <comdef.h> // For _com_error class (used to decode HR result codes).
 
+#include <wrl/client.h>
+using namespace Microsoft::WRL;
+
 #include <d3d12.h>
 
 #include <d3d12.h>

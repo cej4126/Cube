@@ -1,8 +1,8 @@
 #include "Window.h"
+#include "AppWorks.h"
 #include "Device.h"
 
 #include <shlwapi.h>  // for CommandLineToArgvW
-
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR lpCmdLine, int nCmdShopw)
 {
@@ -19,6 +19,14 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR lpCmdLin
    {
       ::PathRemoveFileSpecW(path);
       ::SetCurrentDirectoryW(path);
+   }
+
+   auto& appWorks = AppWorks::Create(hInstance);
+   {
+      pDevice = Device::Create();
+
+      auto& commandQueue = pDevice->getCommandQueue(D3D12_COMMAND_LIST_TYPE_COPY);
+      auto commandList = commandQueue.getCommandList();
    }
 
 

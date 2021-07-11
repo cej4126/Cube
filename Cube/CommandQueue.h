@@ -21,41 +21,46 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  *  IN THE SOFTWARE.
  */
+#include <d3d12.h>
+#include <wrl.h>
+#include <atomic>
+#include <condition_variable>
+#include <cstdint>
+#include "ThreadSafeQueue.h"
+#include "CommandList.h"
 
-#include "directX12.h"
-#include "Adapter.h"
-#include "CommandQueue.h"
+class Device;
+class CommandList;
 
-class CommandQueue;
-
-class Device
+class CommandQueue
 {
 public:
-   static void enableDebugLayer();
-
-   static std::shared_ptr<Device> Create(std::shared_ptr<Adapter> adapter = nullptr);
-
-   UINT getDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE type) const
-   {
-      return m_device->GetDescriptorHandleIncrementSize(type);
-   }
-
-   CommandQueue& getCommandQueue(D3D12_COMMAND_LIST_TYPE type = D3D12_COMMAND_LIST_TYPE_DIRECT);
-
-   Microsoft::WRL::ComPtr<ID3D12Device2> getD3D12Device() const
-   {
-      return m_device;
-   }
+   std::shared_ptr<CommandList> getCommandList();
 
 protected:
-   explicit Device(std::shared_ptr<Adapter> adapter);
+   friend class std::default_delete<CommandQueue>;
+
+   CommandQueue(Device& device, D3D12_COMMAND_LIST_TYPE type);
+   bool isFenceComplete(uint64_t fenceValue);
+   void waitForFenceValue(uint64_t fenceValue);
 
 private:
-   Microsoft::WRL::ComPtr<ID3D12Device2> m_device;
-   std::shared_ptr<Adapter> m_adapter;
+   Device& m_device;
+   D3D12_COMMAND_LIST_TYPE m_commandListType;
+   std::atomic_uint64_t m_fenceValue;
 
-   std::unique_ptr<CommandQueue> m_directCommandQueue;
-   std::unique_ptr<CommandQueue> m_computeCommandQueue;
-   std::unique_ptr<CommandQueue> m_copyCommandQueue;
+   using CommandListEntry = std::tuple<uint64_t, std::shared_ptr<CommandList>>;
+   ThreadSafeQueue<CommandListEntry> m_commandLists;
+   ThreadSafeQueue<std::shared_ptr<CommandList>> m_availableCommandLists;
+
+   Microsoft::WRL::ComPtr<ID3D12CommandQueue> m_commandQueue;
+   Microsoft::WRL::ComPtr<ID3D12Fence> m_fence;
+
+   // Thread for command list processing
+
+   std::thread m_processCommandsListsThread;
+   std::atomic_bool        m_bProcessCommandLists;
+   std::mutex m_processCommandListsMutex;
+   void processCommandLists();
 };
 

@@ -19,9 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Adapter.cpp" />
     <ClCompile Include="AppWorks.cpp" />
+    <ClCompile Include="CommandList.cpp" />
+    <ClCompile Include="CommandQueue.cpp" />
     <ClCompile Include="Device.cpp" />
+    <ClCompile Include="DymanicDescriptorHeap.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ResourceStateTracker.cpp" />
+    <ClCompile Include="UploadBuffer.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -55,11 +61,20 @@
     <ClInclude Include="..\extern\gainput\lib\include\gainput\recorder\GainputInputPlayer.h" />
     <ClInclude Include="..\extern\gainput\lib\include\gainput\recorder\GainputInputRecorder.h" />
     <ClInclude Include="..\extern\gainput\lib\include\gainput\recorder\GainputInputRecording.h" />
+    <ClInclude Include="Adapter.h" />
     <ClInclude Include="AppWorks.h" />
+    <ClInclude Include="CommandList.h" />
+    <ClInclude Include="CommandQueue.h" />
     <ClInclude Include="d3dx12.h" />
+    <ClInclude Include="Defines.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="directX12.h" />
     <ClInclude Include="DirectX12Helper.h" />
+    <ClInclude Include="DymanicDescriptorHeap.h" />
+    <ClInclude Include="Main.h" />
+    <ClInclude Include="ResourceStateTracker.h" />
+    <ClInclude Include="ThreadSafeQueue.h" />
+    <ClInclude Include="UploadBuffer.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

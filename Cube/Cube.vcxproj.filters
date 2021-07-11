@@ -33,6 +33,24 @@
     <ClCompile Include="AppWorks.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Adapter.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandQueue.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandList.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="UploadBuffer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceStateTracker.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="DymanicDescriptorHeap.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -142,6 +160,33 @@
     </ClInclude>
     <ClInclude Include="..\extern\gainput\lib\include\gainput\GainputMapFilters.h">
       <Filter>gainput\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Adapter.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadSafeQueue.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandQueue.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandList.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Defines.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="UploadBuffer.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceStateTracker.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="DymanicDescriptorHeap.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Main.h">
+      <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

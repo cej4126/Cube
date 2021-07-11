@@ -21,41 +21,20 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  *  IN THE SOFTWARE.
  */
+#include "Defines.h"
+#include "Device.h"
 
-#include "directX12.h"
-#include "Adapter.h"
-#include "CommandQueue.h"
+class Device;
 
-class CommandQueue;
-
-class Device
+class UploadBuffer
 {
 public:
-   static void enableDebugLayer();
-
-   static std::shared_ptr<Device> Create(std::shared_ptr<Adapter> adapter = nullptr);
-
-   UINT getDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE type) const
-   {
-      return m_device->GetDescriptorHandleIncrementSize(type);
-   }
-
-   CommandQueue& getCommandQueue(D3D12_COMMAND_LIST_TYPE type = D3D12_COMMAND_LIST_TYPE_DIRECT);
-
-   Microsoft::WRL::ComPtr<ID3D12Device2> getD3D12Device() const
-   {
-      return m_device;
-   }
-
 protected:
-   explicit Device(std::shared_ptr<Adapter> adapter);
+   friend class std::default_delete<UploadBuffer>;
 
+   explicit UploadBuffer(Device& device, size_t pageSize = _2MB);
 private:
-   Microsoft::WRL::ComPtr<ID3D12Device2> m_device;
-   std::shared_ptr<Adapter> m_adapter;
-
-   std::unique_ptr<CommandQueue> m_directCommandQueue;
-   std::unique_ptr<CommandQueue> m_computeCommandQueue;
-   std::unique_ptr<CommandQueue> m_copyCommandQueue;
+   Device& m_device;
+   size_t m_pageSize;
 };
 

@@ -22,40 +22,28 @@
  *  IN THE SOFTWARE.
  */
 
-#include "directX12.h"
-#include "Adapter.h"
-#include "CommandQueue.h"
+#include <d3d12.h>
+#include <dxgi1_6.h>
+#include <wrl/client.h>
 
-class CommandQueue;
+#include <memory>
+#include <vector>
 
-class Device
+class Adapter
 {
 public:
-   static void enableDebugLayer();
+   static std::shared_ptr<Adapter> Create(
+      DXGI_GPU_PREFERENCE gpuPreference = DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE,
+      bool useWarp = false);
 
-   static std::shared_ptr<Device> Create(std::shared_ptr<Adapter> adapter = nullptr);
-
-   UINT getDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE type) const
-   {
-      return m_device->GetDescriptorHandleIncrementSize(type);
-   }
-
-   CommandQueue& getCommandQueue(D3D12_COMMAND_LIST_TYPE type = D3D12_COMMAND_LIST_TYPE_DIRECT);
-
-   Microsoft::WRL::ComPtr<ID3D12Device2> getD3D12Device() const
-   {
-      return m_device;
-   }
+   Microsoft::WRL::ComPtr<IDXGIAdapter4> getDXGIAdapter() const;
 
 protected:
-   explicit Device(std::shared_ptr<Adapter> adapter);
+   Adapter(Microsoft::WRL::ComPtr<IDXGIAdapter4> dxgiAdapter);
+   virtual ~Adapter() = default;
 
 private:
-   Microsoft::WRL::ComPtr<ID3D12Device2> m_device;
-   std::shared_ptr<Adapter> m_adapter;
-
-   std::unique_ptr<CommandQueue> m_directCommandQueue;
-   std::unique_ptr<CommandQueue> m_computeCommandQueue;
-   std::unique_ptr<CommandQueue> m_copyCommandQueue;
+   Microsoft::WRL::ComPtr<IDXGIAdapter4> m_dxgiAdapter;
+   DXGI_ADAPTER_DESC3                    m_desc;
 };
 
