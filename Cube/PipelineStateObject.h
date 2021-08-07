@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- *  Copyright(c) 2018 Jeremiah van Oosten
+ *  Copyright(c) 2020 Jeremiah van Oosten
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files(the "Software"), to deal
@@ -21,66 +21,23 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  *  IN THE SOFTWARE.
  */
-#include "Defines.h"
+
 #include <d3d12.h>
-#include <wrl.h>
-#include <deque>
-#include <memory>
+#include <wrl/client.h>
 
 class Device;
 
-class UploadBuffer
+class PipelineStateObject
 {
 public:
-   struct Allocation
-   {
-      void* CPU;
-      D3D12_GPU_VIRTUAL_ADDRESS GPU;
-   };
-   size_t GetPageSize() const
-   {
-      return m_PageSize;
-   }
-
-   Allocation Allocate(size_t sizeInBytes, size_t alignment);
-
-   void Reset();
+   Microsoft::WRL::ComPtr< ID3D12PipelineState> GetD3D12PipelineState() const { return m_pipelineState; }
 
 protected:
-   friend class std::default_delete<UploadBuffer>;
+   PipelineStateObject(Device& device, const D3D12_PIPELINE_STATE_STREAM_DESC& desc);
+   virtual ~PipelineStateObject() = default;
 
-   explicit UploadBuffer(Device& device, size_t pageSize = _2MB);
-   virtual ~UploadBuffer();
 private:
-
-   struct Page
-   {
-      Page(Device& device, size_t sizeInBytes);
-      ~Page();
-
-      bool HasSpace(size_t sizeInBytes, size_t alignment) const;
-
-      Allocation Allocate(size_t sizeInBytes, size_t alignment);
-      void Reset();
-   private:
-      Device& m_Device;
-      Microsoft::WRL::ComPtr<ID3D12Resource> m_d3d12Resource;
-      void* m_CPUPtr;
-      D3D12_GPU_VIRTUAL_ADDRESS m_GPUPtr;
-      size_t m_PageSize;
-      size_t m_Offset;
-   };
-
-   using PagePool = std::deque<std::shared_ptr<Page>>;
-
    Device& m_Device;
-   std::shared_ptr<Page> RequestPage();
-
-   PagePool m_PagePool;
-   PagePool m_AvailablePages;
-
-   std::shared_ptr<Page> m_CurrentPage;
-
-   size_t m_PageSize;
+   Microsoft::WRL::ComPtr<ID3D12PipelineState> m_pipelineState;
 };
 

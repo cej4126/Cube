@@ -33,10 +33,10 @@ public:
    ThreadSafeQueue();
    ThreadSafeQueue(const ThreadSafeQueue& copy);
 
-   void push(T value);
-   bool tryPop(T& value);
-   bool empty() const;
-   size_t size() const;
+   void Push(T value);
+   bool TryPop(T& value);
+   bool Empty() const;
+   size_t Size() const;
 
 private:
    std::queue<T> m_queue;
@@ -55,14 +55,14 @@ ThreadSafeQueue<T>::ThreadSafeQueue(const ThreadSafeQueue<T>& copy)
 }
 
 template<typename T>
-void ThreadSafeQueue<T>::push(T value)
+void ThreadSafeQueue<T>::Push(T value)
 {
    std::lock_guard<std::mutex> lock(m_mutex);
    m_queue.push(std::move(value));
 }
 
 template<typename T>
-bool ThreadSafeQueue<T>::tryPop(T& value)
+bool ThreadSafeQueue<T>::TryPop(T& value)
 {
    std::lock_guard<std::mutex> lock(m_mutex);
    if (m_queue.empty())
@@ -77,14 +77,14 @@ bool ThreadSafeQueue<T>::tryPop(T& value)
 }
 
 template<typename T>
-bool ThreadSafeQueue<T>::empty() const
+bool ThreadSafeQueue<T>::Empty() const
 {
    std::lock_guard<std::mutex> lock(m_mutex);
    return m_queue.empty();
 }
 
 template<typename T>
-size_t ThreadSafeQueue<T>::size() const
+size_t ThreadSafeQueue<T>::Size() const
 {
    std::lock_guard<std::mutex> lock(m_mutex);
    return m_queue.size();

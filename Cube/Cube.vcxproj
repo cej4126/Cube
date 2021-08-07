@@ -21,13 +21,27 @@
   <ItemGroup>
     <ClCompile Include="Adapter.cpp" />
     <ClCompile Include="AppWorks.cpp" />
+    <ClCompile Include="Buffer.cpp" />
     <ClCompile Include="CommandList.cpp" />
     <ClCompile Include="CommandQueue.cpp" />
+    <ClCompile Include="DescriptorAllocation.cpp" />
+    <ClCompile Include="DescriptorAllocatorPage.cpp" />
+    <ClCompile Include="DescriptorAllocator.cpp" />
     <ClCompile Include="Device.cpp" />
-    <ClCompile Include="DymanicDescriptorHeap.cpp" />
+    <ClCompile Include="DynamicDescriptorHeap.cpp" />
+    <ClCompile Include="HighResolutionTimer.cpp" />
+    <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="PipelineStateObject.cpp" />
+    <ClCompile Include="RenderTarget.cpp" />
+    <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceStateTracker.cpp" />
+    <ClCompile Include="RootSignature.cpp" />
+    <ClCompile Include="SwapChain.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="UploadBuffer.cpp" />
+    <ClCompile Include="VertexBuffer.cpp" />
+    <ClCompile Include="VertexTypes.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -63,19 +77,53 @@
     <ClInclude Include="..\extern\gainput\lib\include\gainput\recorder\GainputInputRecording.h" />
     <ClInclude Include="Adapter.h" />
     <ClInclude Include="AppWorks.h" />
+    <ClInclude Include="Buffer.h" />
     <ClInclude Include="CommandList.h" />
     <ClInclude Include="CommandQueue.h" />
     <ClInclude Include="d3dx12.h" />
     <ClInclude Include="Defines.h" />
+    <ClInclude Include="DescriptorAllocation.h" />
+    <ClInclude Include="DescriptorAllocatorPage.h" />
+    <ClInclude Include="DescriptorAllocator.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="directX12.h" />
     <ClInclude Include="DirectX12Helper.h" />
-    <ClInclude Include="DymanicDescriptorHeap.h" />
+    <ClInclude Include="DynamicDescriptorHeap.h" />
+    <ClInclude Include="Events.h" />
+    <ClInclude Include="HighResolutionTimer.h" />
+    <ClInclude Include="IndexBuffer.h" />
+    <ClInclude Include="KeyCodes.h" />
     <ClInclude Include="Main.h" />
+    <ClInclude Include="optional.h" />
+    <ClInclude Include="PipelineStateObject.h" />
+    <ClInclude Include="RenderTarget.h" />
+    <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceStateTracker.h" />
+    <ClInclude Include="RootSignature.h" />
+    <ClInclude Include="Signals.h" />
+    <ClInclude Include="SwapChain.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="ThreadSafeQueue.h" />
     <ClInclude Include="UploadBuffer.h" />
+    <ClInclude Include="VertexBuffer.h" />
+    <ClInclude Include="VertexTypes.h" />
     <ClInclude Include="Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="PixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">6.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="VertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">6.0</ShaderModel>
+    </FxCompile>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -100,9 +148,10 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
+    <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -160,15 +209,19 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <SDLCheck>false</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_ENABLE_EXTENDED_ALIGNED_STORAGE;NOMINMAX;CMAKE_INTDIR="Debug;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>Default</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <FloatingPointModel>Fast</FloatingPointModel>
+      <FloatingPointModel>Precise</FloatingPointModel>
       <AdditionalIncludeDirectories>F:\MyPrograms\DirectX12_Programs\LearningDirectX12Test\Cube\extern\gainput\lib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Disabled</Optimization>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

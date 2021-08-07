@@ -23,41 +23,21 @@
  */
 
  /**
-  *  @file DynamicDescriptorHeap.h
+  *  @file Buffer.h
   *  @date October 22, 2018
   *  @author Jeremiah van Oosten
   *
-  *  @brief The DynamicDescriptorHeap is a GPU visible descriptor heap that allows for
-  *  staging of CPU visible descriptors that need to be uploaded before a Draw
-  *  or Dispatch command is executed.
-  *  The DynamicDescriptorHeap class is based on the one provided by the MiniEngine:
-  *  https://github.com/Microsoft/DirectX-Graphics-Samples
+  *  @brief Abstract base class for buffer resources.
   */
 
-#include "d3dx12.h"
+#include "Resource.h"
 
-class Device;
+  //class Device;
 
-class DymanicDescriptorHeap
+class Buffer : public Resource
 {
 public:
-   DymanicDescriptorHeap(Device& device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, uint32_t numDescriptorPerHeap = 1024);
-private:
-   Device& m_device;
-   D3D12_DESCRIPTOR_HEAP_TYPE m_descriptorHeapType;
-   uint32_t m_numDescriptorsPerHeap;
-   uint32_t m_StaleDescriptorTableBitMask;
-   uint32_t m_StaleCBVBitMask;
-   uint32_t m_StaleSRVBitMask;
-   uint32_t m_StaleUAVBitMask;
-   
-   std::unique_ptr<D3D12_CPU_DESCRIPTOR_HANDLE[]> m_descriptorHandleCache;
-
-   Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> m_CurrentDescriptorHeap;
-   CD3DX12_GPU_DESCRIPTOR_HANDLE m_CurrentCPUDescriptorHandle;
-   CD3DX12_CPU_DESCRIPTOR_HANDLE m_CurrentGPUDescriptorHandle;
-   uint32_t m_NumFreeHandles;
-
-   uint32_t m_DescriptorHandleIncrementSize;
+protected:
+   Buffer(Device& device, const D3D12_RESOURCE_DESC& resDesc);
+   Buffer(Device& device, Microsoft::WRL::ComPtr<ID3D12Resource> resource);
 };
-

@@ -21,66 +21,46 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  *  IN THE SOFTWARE.
  */
-#include "Defines.h"
+#include <DirectXMath.h>
 #include <d3d12.h>
-#include <wrl.h>
-#include <deque>
-#include <memory>
+#include <cstdint>
+#include <memory>  // for std::shared_ptr
+#include <vector>
 
-class Device;
+class Texture;
 
-class UploadBuffer
+enum AttachmentPoint
+{
+   Color0,
+   Color1,
+   Color2,
+   Color3,
+   Color4,
+   Color5,
+   Color6,
+   Color7,
+   DepthStencil,
+   NumAttachmentPoints
+};
+
+class RenderTarget
 {
 public:
-   struct Allocation
-   {
-      void* CPU;
-      D3D12_GPU_VIRTUAL_ADDRESS GPU;
-   };
-   size_t GetPageSize() const
-   {
-      return m_PageSize;
-   }
+   RenderTarget();
 
-   Allocation Allocate(size_t sizeInBytes, size_t alignment);
+   void Reset() { m_Textures = std::vector<std::shared_ptr<Texture>>(AttachmentPoint::NumAttachmentPoints); }
+   void AttachTexture(AttachmentPoint attachmentPoint, std::shared_ptr<Texture> texture);
+   std::shared_ptr<Texture> GetTexture(AttachmentPoint attachmentPoint) const;
+   D3D12_RT_FORMAT_ARRAY GetRenderTargetFormats() const;
 
-   void Reset();
+   D3D12_VIEWPORT GetViewport(DirectX::XMFLOAT2 scale = { 1.0f, 1.0f },
+      DirectX::XMFLOAT2 bias = { 0.0f, 0.0f },
+      float minDepth = 0.0f, float maxDepth = 1.0f);
+   const std::vector<std::shared_ptr<Texture>>& GetTextures() const;
 
-protected:
-   friend class std::default_delete<UploadBuffer>;
-
-   explicit UploadBuffer(Device& device, size_t pageSize = _2MB);
-   virtual ~UploadBuffer();
 private:
+   std::vector<std::shared_ptr<Texture>> m_Textures;
+   DirectX::XMUINT2 m_Size;
 
-   struct Page
-   {
-      Page(Device& device, size_t sizeInBytes);
-      ~Page();
-
-      bool HasSpace(size_t sizeInBytes, size_t alignment) const;
-
-      Allocation Allocate(size_t sizeInBytes, size_t alignment);
-      void Reset();
-   private:
-      Device& m_Device;
-      Microsoft::WRL::ComPtr<ID3D12Resource> m_d3d12Resource;
-      void* m_CPUPtr;
-      D3D12_GPU_VIRTUAL_ADDRESS m_GPUPtr;
-      size_t m_PageSize;
-      size_t m_Offset;
-   };
-
-   using PagePool = std::deque<std::shared_ptr<Page>>;
-
-   Device& m_Device;
-   std::shared_ptr<Page> RequestPage();
-
-   PagePool m_PagePool;
-   PagePool m_AvailablePages;
-
-   std::shared_ptr<Page> m_CurrentPage;
-
-   size_t m_PageSize;
 };
 
