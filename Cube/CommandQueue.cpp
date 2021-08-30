@@ -1,4 +1,5 @@
 //#include "DX12LibPCH.h"
+#include "DirectX12Helper.h"
 #include "CommandQueue.h"
 #include "CommandList.h"
 #include "Device.h"

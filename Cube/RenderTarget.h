@@ -48,15 +48,35 @@ class RenderTarget
 public:
    RenderTarget();
 
-   void Reset() { m_Textures = std::vector<std::shared_ptr<Texture>>(AttachmentPoint::NumAttachmentPoints); }
+   RenderTarget(const RenderTarget& copy) = default;
+   RenderTarget(RenderTarget&& copy) = default;
+
+   RenderTarget& operator=(const RenderTarget& other) = default;
+   RenderTarget& operator=(RenderTarget&& other) = default;
+
    void AttachTexture(AttachmentPoint attachmentPoint, std::shared_ptr<Texture> texture);
    std::shared_ptr<Texture> GetTexture(AttachmentPoint attachmentPoint) const;
-   D3D12_RT_FORMAT_ARRAY GetRenderTargetFormats() const;
+
+   void Resize(DirectX::XMUINT2 size);
+   void Resize(uint32_t width, uint32_t height);
+   DirectX::XMUINT2 GetSize() const;
+   uint32_t GetWidth() const;
+   uint32_t GetHeight() const;
 
    D3D12_VIEWPORT GetViewport(DirectX::XMFLOAT2 scale = { 1.0f, 1.0f },
       DirectX::XMFLOAT2 bias = { 0.0f, 0.0f },
       float minDepth = 0.0f, float maxDepth = 1.0f);
+
    const std::vector<std::shared_ptr<Texture>>& GetTextures() const;
+   D3D12_RT_FORMAT_ARRAY GetRenderTargetFormats() const;
+   DXGI_FORMAT GetDepthStencilFormat() const;
+
+   DXGI_SAMPLE_DESC GetSampleDesc() const;
+
+   void Reset()
+   {
+      m_Textures = std::vector<std::shared_ptr<Texture>>(AttachmentPoint::NumAttachmentPoints);
+   }
 
 private:
    std::vector<std::shared_ptr<Texture>> m_Textures;

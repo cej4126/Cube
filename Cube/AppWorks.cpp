@@ -1,8 +1,7 @@
-#include <map>
 #include "AppWorks.h"
 #include "Window.h"
 #include "objbase.h"
-//#include <windows.h>
+#include <map>
 #include <strsafe.h>
 
 static AppWorks* g_appWorks = nullptr;

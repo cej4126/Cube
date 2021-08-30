@@ -8,19 +8,6 @@
 #include "Device.h"
 #include "ResourceStateTracker.h"
 #include "Texture.h"
-//
-//#include "DX12LibPCH.h"
-//
-//#include <dx12lib/SwapChain.h>
-//
-//#include <dx12lib/Adapter.h>
-//#include <dx12lib/CommandList.h>
-//#include <dx12lib/CommandQueue.h>
-//#include <dx12lib/Device.h>
-//#include <dx12lib/GUI.h>
-//#include <dx12lib/RenderTarget.h>
-//#include <dx12lib/ResourceStateTracker.h>
-//#include <dx12lib/Texture.h>
 
 SwapChain::SwapChain(Device& device, HWND hWnd, DXGI_FORMAT renderTargetFormat)
    : m_Device(device)

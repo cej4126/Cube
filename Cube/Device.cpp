@@ -8,17 +8,19 @@
 #include "DescriptorAllocator.h"
 #include "RootSignature.h"
 #include "PipelineStateObject.h"
+#include "ShaderResourceView.h"
+#include "GUI.h"
 
 
 
 //#include "DX12LibPCH.h"
 //
 //#include <dx12lib/Adapter.h>
-//#include <dx12lib/ByteAddressBuffer.h>
+#include "ByteAddressBuffer.h"
 //#include <dx12lib/CommandList.h>
 //#include <dx12lib/CommandQueue.h>
-//#include <dx12lib/ConstantBuffer.h>
-//#include <dx12lib/ConstantBufferView.h>
+#include "ConstantBuffer.h"
+#include "ConstantBufferView.h"
 //#include <dx12lib/DescriptorAllocator.h>
 //#include <dx12lib/Device.h>
 //#include <dx12lib/GUI.h>
@@ -28,56 +30,56 @@
 //#include <dx12lib/RootSignature.h>
 //#include <dx12lib/Scene.h>
 //#include <dx12lib/ShaderResourceView.h>
-//#include <dx12lib/StructuredBuffer.h>
+#include "StructuredBuffer.h"
 //#include <dx12lib/SwapChain.h>
 //#include <dx12lib/Texture.h>
-//#include <dx12lib/UnorderedAccessView.h>
+#include "UnorderedAccessView.h"
 //#include <dx12lib/VertexBuffer.h>
 
 #pragma region Class adapters for std::make_shared
 
-//class MakeGUI : public GUI
-//{
-//public:
-//   MakeGUI(Device& device, HWND hWnd, const RenderTarget& renderTarget)
-//      : GUI(device, hWnd, renderTarget)
-//   {}
-//
-//   virtual ~MakeGUI() {}
-//};
-//
-//class MakeUnorderedAccessView : public UnorderedAccessView
-//{
-//public:
-//   MakeUnorderedAccessView(Device& device, const std::shared_ptr<Resource>& resource,
-//      const std::shared_ptr<Resource>& counterResource,
-//      const D3D12_UNORDERED_ACCESS_VIEW_DESC* uav)
-//      : UnorderedAccessView(device, resource, counterResource, uav)
-//   {}
-//
-//   virtual ~MakeUnorderedAccessView() {}
-//};
-//
-//class MakeShaderResourceView : public ShaderResourceView
-//{
-//public:
-//   MakeShaderResourceView(Device& device, const std::shared_ptr<Resource>& resource,
-//      const D3D12_SHADER_RESOURCE_VIEW_DESC* srv)
-//      : ShaderResourceView(device, resource, srv)
-//   {}
-//
-//   virtual ~MakeShaderResourceView() {}
-//};
-//
-//class MakeConstantBufferView : public ConstantBufferView
-//{
-//public:
-//   MakeConstantBufferView(Device& device, const std::shared_ptr<ConstantBuffer>& constantBuffer, size_t offset)
-//      : ConstantBufferView(device, constantBuffer, offset)
-//   {}
-//
-//   virtual ~MakeConstantBufferView() {}
-//};
+class MakeGUI : public GUI
+{
+public:
+   MakeGUI(Device& device, HWND hWnd, const RenderTarget& renderTarget)
+      : GUI(device, hWnd, renderTarget)
+   {}
+
+   virtual ~MakeGUI() {}
+};
+
+class MakeUnorderedAccessView : public UnorderedAccessView
+{
+public:
+   MakeUnorderedAccessView(Device& device, const std::shared_ptr<Resource>& resource,
+      const std::shared_ptr<Resource>& counterResource,
+      const D3D12_UNORDERED_ACCESS_VIEW_DESC* uav)
+      : UnorderedAccessView(device, resource, counterResource, uav)
+   {}
+
+   virtual ~MakeUnorderedAccessView() {}
+};
+
+class MakeShaderResourceView : public ShaderResourceView
+{
+public:
+   MakeShaderResourceView(Device& device, const std::shared_ptr<Resource>& resource,
+      const D3D12_SHADER_RESOURCE_VIEW_DESC* srv)
+      : ShaderResourceView(device, resource, srv)
+   {}
+
+   virtual ~MakeShaderResourceView() {}
+};
+
+class MakeConstantBufferView : public ConstantBufferView
+{
+public:
+   MakeConstantBufferView(Device& device, const std::shared_ptr<ConstantBuffer>& constantBuffer, size_t offset)
+      : ConstantBufferView(device, constantBuffer, offset)
+   {}
+
+   virtual ~MakeConstantBufferView() {}
+};
 
 class MakePipelineStateObject : public PipelineStateObject
 {
@@ -112,19 +114,19 @@ public:
    virtual ~MakeTexture() {}
 };
 
-//class MakeStructuredBuffer : public StructuredBuffer
-//{
-//public:
-//   MakeStructuredBuffer(Device& device, size_t numElements, size_t elementSize)
-//      : StructuredBuffer(device, numElements, elementSize)
-//   {}
-//
-//   MakeStructuredBuffer(Device& device, ComPtr<ID3D12Resource> resource, size_t numElements, size_t elementSize)
-//      : StructuredBuffer(device, resource, numElements, elementSize)
-//   {}
-//
-//   virtual ~MakeStructuredBuffer() {}
-//};
+class MakeStructuredBuffer : public StructuredBuffer
+{
+public:
+   MakeStructuredBuffer(Device& device, size_t numElements, size_t elementSize)
+      : StructuredBuffer(device, numElements, elementSize)
+   {}
+
+   MakeStructuredBuffer(Device& device, ComPtr<ID3D12Resource> resource, size_t numElements, size_t elementSize)
+      : StructuredBuffer(device, resource, numElements, elementSize)
+   {}
+
+   virtual ~MakeStructuredBuffer() {}
+};
 
 class MakeVertexBuffer : public VertexBuffer
 {
@@ -155,29 +157,29 @@ public:
    virtual ~MakeIndexBuffer() {}
 };
 
-//class MakeConstantBuffer : public ConstantBuffer
-//{
-//public:
-//   MakeConstantBuffer(Device& device, ComPtr<ID3D12Resource> resource)
-//      : ConstantBuffer(device, resource)
-//   {}
-//
-//   virtual ~MakeConstantBuffer() {}
-//};
-//
-//class MakeByteAddressBuffer : public ByteAddressBuffer
-//{
-//public:
-//   MakeByteAddressBuffer(Device& device, const D3D12_RESOURCE_DESC& desc)
-//      : ByteAddressBuffer(device, desc)
-//   {}
-//
-//   MakeByteAddressBuffer(Device& device, Microsoft::WRL::ComPtr<ID3D12Resource> resoruce)
-//      : ByteAddressBuffer(device, resoruce)
-//   {}
-//
-//   virtual ~MakeByteAddressBuffer() {}
-//};
+class MakeConstantBuffer : public ConstantBuffer
+{
+public:
+   MakeConstantBuffer(Device& device, ComPtr<ID3D12Resource> resource)
+      : ConstantBuffer(device, resource)
+   {}
+
+   virtual ~MakeConstantBuffer() {}
+};
+
+class MakeByteAddressBuffer : public ByteAddressBuffer
+{
+public:
+   MakeByteAddressBuffer(Device& device, const D3D12_RESOURCE_DESC& desc)
+      : ByteAddressBuffer(device, desc)
+   {}
+
+   MakeByteAddressBuffer(Device& device, Microsoft::WRL::ComPtr<ID3D12Resource> resoruce)
+      : ByteAddressBuffer(device, resoruce)
+   {}
+
+   virtual ~MakeByteAddressBuffer() {}
+};
 
 class MakeDescriptorAllocator : public DescriptorAllocator
 {
@@ -372,54 +374,54 @@ std::shared_ptr<SwapChain> Device::CreateSwapChain(HWND hWnd, DXGI_FORMAT backBu
    return swapChain;
 }
 
-//std::shared_ptr<GUI> Device::CreateGUI(HWND hWnd, const RenderTarget& renderTarget)
-//{
-//   std::shared_ptr<GUI> gui = std::make_shared<MakeGUI>(*this, hWnd, renderTarget);
-//
-//   return gui;
-//}
-//
-//std::shared_ptr<ConstantBuffer> Device::CreateConstantBuffer(Microsoft::WRL::ComPtr<ID3D12Resource> resource)
-//{
-//   std::shared_ptr<ConstantBuffer> constantBuffer = std::make_shared<MakeConstantBuffer>(*this, resource);
-//
-//   return constantBuffer;
-//}
-//
-//std::shared_ptr<ByteAddressBuffer> Device::CreateByteAddressBuffer(size_t bufferSize)
-//{
-//   // Align-up to 4-bytes
-//   bufferSize = Math::AlignUp(bufferSize, 4);
-//
-//   std::shared_ptr<ByteAddressBuffer> buffer = std::make_shared<MakeByteAddressBuffer>(
-//      *this, CD3DX12_RESOURCE_DESC::Buffer(bufferSize, D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS));
-//
-//   return buffer;
-//}
-//
-//std::shared_ptr<ByteAddressBuffer> Device::CreateByteAddressBuffer(ComPtr<ID3D12Resource> resource)
-//{
-//   std::shared_ptr<ByteAddressBuffer> buffer = std::make_shared<MakeByteAddressBuffer>(*this, resource);
-//
-//   return buffer;
-//}
-//
-//std::shared_ptr<StructuredBuffer> Device::CreateStructuredBuffer(size_t numElements, size_t elementSize)
-//{
-//   std::shared_ptr<StructuredBuffer> structuredBuffer =
-//      std::make_shared<MakeStructuredBuffer>(*this, numElements, elementSize);
-//
-//   return structuredBuffer;
-//}
-//
-//std::shared_ptr<StructuredBuffer> Device::CreateStructuredBuffer(ComPtr<ID3D12Resource> resource, size_t numElements,
-//   size_t elementSize)
-//{
-//   std::shared_ptr<StructuredBuffer> structuredBuffer =
-//      std::make_shared<MakeStructuredBuffer>(*this, resource, numElements, elementSize);
-//
-//   return structuredBuffer;
-//}
+std::shared_ptr<GUI> Device::CreateGUI(HWND hWnd, const RenderTarget& renderTarget)
+{
+   std::shared_ptr<GUI> gui = std::make_shared<MakeGUI>(*this, hWnd, renderTarget);
+
+   return gui;
+}
+
+std::shared_ptr<ConstantBuffer> Device::CreateConstantBuffer(Microsoft::WRL::ComPtr<ID3D12Resource> resource)
+{
+   std::shared_ptr<ConstantBuffer> constantBuffer = std::make_shared<MakeConstantBuffer>(*this, resource);
+
+   return constantBuffer;
+}
+
+std::shared_ptr<ByteAddressBuffer> Device::CreateByteAddressBuffer(size_t bufferSize)
+{
+   // Align-up to 4-bytes
+   bufferSize = Math::AlignUp(bufferSize, 4);
+
+   std::shared_ptr<ByteAddressBuffer> buffer = std::make_shared<MakeByteAddressBuffer>(
+      *this, CD3DX12_RESOURCE_DESC::Buffer(bufferSize, D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS));
+
+   return buffer;
+}
+
+std::shared_ptr<ByteAddressBuffer> Device::CreateByteAddressBuffer(ComPtr<ID3D12Resource> resource)
+{
+   std::shared_ptr<ByteAddressBuffer> buffer = std::make_shared<MakeByteAddressBuffer>(*this, resource);
+
+   return buffer;
+}
+
+std::shared_ptr<StructuredBuffer> Device::CreateStructuredBuffer(size_t numElements, size_t elementSize)
+{
+   std::shared_ptr<StructuredBuffer> structuredBuffer =
+      std::make_shared<MakeStructuredBuffer>(*this, numElements, elementSize);
+
+   return structuredBuffer;
+}
+
+std::shared_ptr<StructuredBuffer> Device::CreateStructuredBuffer(ComPtr<ID3D12Resource> resource, size_t numElements,
+   size_t elementSize)
+{
+   std::shared_ptr<StructuredBuffer> structuredBuffer =
+      std::make_shared<MakeStructuredBuffer>(*this, resource, numElements, elementSize);
+
+   return structuredBuffer;
+}
 
 std::shared_ptr<IndexBuffer> Device::CreateIndexBuffer(size_t numIndicies, DXGI_FORMAT indexFormat)
 {
@@ -486,34 +488,33 @@ std::shared_ptr<PipelineStateObject> Device::DoCreatePipelineStateObject(
    return pipelineStateObject;
 }
 
-//std::shared_ptr<ConstantBufferView>
-//Device::CreateConstantBufferView(const std::shared_ptr<ConstantBuffer>& constantBuffer, size_t offset)
-//{
-//   std::shared_ptr<ConstantBufferView> constantBufferView =
-//      std::make_shared<MakeConstantBufferView>(*this, constantBuffer, offset);
-//
-//   return constantBufferView;
-//}
-//
-//std::shared_ptr<ShaderResourceView> Device::CreateShaderResourceView(const std::shared_ptr<Resource>& resource,
-//   const D3D12_SHADER_RESOURCE_VIEW_DESC* srv)
-//{
-//   std::shared_ptr<ShaderResourceView> shaderResourceView =
-//      std::make_shared<MakeShaderResourceView>(*this, resource, srv);
-//
-//   return shaderResourceView;
-//}
-//
-//std::shared_ptr<UnorderedAccessView>
-//Device::CreateUnorderedAccessView(const std::shared_ptr<Resource>& resource,
-//   const std::shared_ptr<Resource>& counterResource,
-//   const D3D12_UNORDERED_ACCESS_VIEW_DESC* uav)
-//{
-//   std::shared_ptr<UnorderedAccessView> unorderedAccessView =
-//      std::make_shared<MakeUnorderedAccessView>(*this, resource, counterResource, uav);
-//
-//   return unorderedAccessView;
-//}
+std::shared_ptr<ConstantBufferView> Device::CreateConstantBufferView(const std::shared_ptr<ConstantBuffer>& constantBuffer, size_t offset)
+{
+   std::shared_ptr<ConstantBufferView> constantBufferView =
+      std::make_shared<MakeConstantBufferView>(*this, constantBuffer, offset);
+
+   return constantBufferView;
+}
+
+std::shared_ptr<ShaderResourceView> Device::CreateShaderResourceView(const std::shared_ptr<Resource>& resource,
+   const D3D12_SHADER_RESOURCE_VIEW_DESC* srv)
+{
+   std::shared_ptr<ShaderResourceView> shaderResourceView =
+      std::make_shared<MakeShaderResourceView>(*this, resource, srv);
+
+   return shaderResourceView;
+}
+
+std::shared_ptr<UnorderedAccessView>
+Device::CreateUnorderedAccessView(const std::shared_ptr<Resource>& resource,
+   const std::shared_ptr<Resource>& counterResource,
+   const D3D12_UNORDERED_ACCESS_VIEW_DESC* uav)
+{
+   std::shared_ptr<UnorderedAccessView> unorderedAccessView =
+      std::make_shared<MakeUnorderedAccessView>(*this, resource, counterResource, uav);
+
+   return unorderedAccessView;
+}
 
 DXGI_SAMPLE_DESC Device::GetMultisampleQualityLevels(DXGI_FORMAT format, UINT numSamples,
    D3D12_MULTISAMPLE_QUALITY_LEVEL_FLAGS flags) const

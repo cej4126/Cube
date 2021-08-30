@@ -1,6 +1,8 @@
 #include "RenderTarget.h"
 #include "Texture.h"
 
+using namespace DirectX;
+
 RenderTarget::RenderTarget() :
    m_Textures(AttachmentPoint::NumAttachmentPoints),
    m_Size(0, 0)
@@ -24,18 +26,36 @@ std::shared_ptr<Texture> RenderTarget::GetTexture(AttachmentPoint attachmentPoin
    return m_Textures[attachmentPoint];
 }
 
-D3D12_RT_FORMAT_ARRAY RenderTarget::GetRenderTargetFormats() const
+void RenderTarget::Resize(DirectX::XMUINT2 size)
 {
-   D3D12_RT_FORMAT_ARRAY rtvFormats = {};
-   for (int i = AttachmentPoint::Color0; i < AttachmentPoint::Color7; i++)
+   m_Size = size;
+   for (auto texture : m_Textures)
    {
-      auto texture = m_Textures[i];
       if (texture)
       {
-         rtvFormats.RTFormats[rtvFormats.NumRenderTargets++] = texture->GetD3D12ResourceDesc().Format;
+         texture->Resize(m_Size.x, m_Size.y);
       }
    }
-    return rtvFormats;
+}
+
+void RenderTarget::Resize(uint32_t width, uint32_t height)
+{
+   Resize(XMUINT2(width, height));
+}
+
+DirectX::XMUINT2 RenderTarget::GetSize() const
+{
+   return m_Size;
+}
+
+uint32_t RenderTarget::GetWidth() const
+{
+   return m_Size.x;
+}
+
+uint32_t RenderTarget::GetHeight() const
+{
+   return m_Size.y;
 }
 
 D3D12_VIEWPORT RenderTarget::GetViewport(DirectX::XMFLOAT2 scale, DirectX::XMFLOAT2 bias, float minDepth, float maxDepth)
@@ -75,4 +95,44 @@ D3D12_VIEWPORT RenderTarget::GetViewport(DirectX::XMFLOAT2 scale, DirectX::XMFLO
 const std::vector<std::shared_ptr<Texture>>& RenderTarget::GetTextures() const
 {
    return m_Textures;
+}
+
+D3D12_RT_FORMAT_ARRAY RenderTarget::GetRenderTargetFormats() const
+{
+   D3D12_RT_FORMAT_ARRAY rtvFormats = {};
+   for (int i = AttachmentPoint::Color0; i < AttachmentPoint::Color7; i++)
+   {
+      auto texture = m_Textures[i];
+      if (texture)
+      {
+         rtvFormats.RTFormats[rtvFormats.NumRenderTargets++] = texture->GetD3D12ResourceDesc().Format;
+      }
+   }
+   return rtvFormats;
+}
+
+DXGI_FORMAT RenderTarget::GetDepthStencilFormat() const
+{
+   DXGI_FORMAT dvsFormat = DXGI_FORMAT_UNKNOWN;
+   auto depthStencilTexture = m_Textures[AttachmentPoint::DepthStencil];
+   if (depthStencilTexture)
+   {
+      dvsFormat = depthStencilTexture->GetD3D12ResourceDesc().Format;
+   }
+   return dvsFormat;
+}
+
+DXGI_SAMPLE_DESC RenderTarget::GetSampleDesc() const
+{
+   DXGI_SAMPLE_DESC sampleDesc = { 1, 0 };
+   for (int i = AttachmentPoint::Color0; i < AttachmentPoint::Color7; i++)
+   {
+      auto texture = m_Textures[i];
+      if (texture)
+      {
+         sampleDesc = texture->GetD3D12ResourceDesc().SampleDesc;
+         break;
+      }
+   }
+   return sampleDesc;
 }

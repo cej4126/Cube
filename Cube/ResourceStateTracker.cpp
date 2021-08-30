@@ -9,6 +9,7 @@
 #include "ResourceStateTracker.h"
 #include "CommandList.h"
 #include "Resource.h"
+#include "d3dx12.h"
 
 // Static definitions.
 std::mutex                             ResourceStateTracker::ms_GlobalMutex;

@@ -103,27 +103,26 @@
       /**
        * Create a GUI object.
        */
-      //std::shared_ptr<GUI> CreateGUI(HWND hWnd, const RenderTarget& renderTarget);
+      std::shared_ptr<GUI> CreateGUI(HWND hWnd, const RenderTarget& renderTarget);
 
       /**
        * Create a ConstantBuffer from a given ID3D12Resoure.
        */
-      //std::shared_ptr<ConstantBuffer> CreateConstantBuffer(Microsoft::WRL::ComPtr<ID3D12Resource> resource);
+      std::shared_ptr<ConstantBuffer> CreateConstantBuffer(Microsoft::WRL::ComPtr<ID3D12Resource> resource);
 
       /**
        * Create a ByteAddressBuffer resource.
        *
        * @param resDesc A description of the resource.
        */
-      //std::shared_ptr<ByteAddressBuffer> CreateByteAddressBuffer(size_t bufferSize);
-      //std::shared_ptr<ByteAddressBuffer> CreateByteAddressBuffer(Microsoft::WRL::ComPtr<ID3D12Resource> resource);
+      std::shared_ptr<ByteAddressBuffer> CreateByteAddressBuffer(size_t bufferSize);
+      std::shared_ptr<ByteAddressBuffer> CreateByteAddressBuffer(Microsoft::WRL::ComPtr<ID3D12Resource> resource);
 
       /**
        * Create a structured buffer resource.
        */
-      //std::shared_ptr<StructuredBuffer> CreateStructuredBuffer(size_t numElements, size_t elementSize);
-      //std::shared_ptr<StructuredBuffer> CreateStructuredBuffer(Microsoft::WRL::ComPtr<ID3D12Resource> resource,
-      //   size_t numElements, size_t elementSize);
+      std::shared_ptr<StructuredBuffer> CreateStructuredBuffer(size_t numElements, size_t elementSize);
+      std::shared_ptr<StructuredBuffer> CreateStructuredBuffer(Microsoft::WRL::ComPtr<ID3D12Resource> resource, size_t numElements, size_t elementSize);
 
       /**
        * Create a Texture resource.
@@ -158,17 +157,14 @@
          return DoCreatePipelineStateObject(pipelineStateStreamDesc);
       }
 
-      //std::shared_ptr<ConstantBufferView> CreateConstantBufferView(const std::shared_ptr<ConstantBuffer>& constantBuffer,
-      //   size_t                                 offset = 0);
+      std::shared_ptr<ConstantBufferView> CreateConstantBufferView(const std::shared_ptr<ConstantBuffer>& constantBuffer, size_t offset = 0);
 
-      //std::shared_ptr<ShaderResourceView>
-      //   CreateShaderResourceView(const std::shared_ptr<Resource>& resource,
-      //      const D3D12_SHADER_RESOURCE_VIEW_DESC* srv = nullptr);
+      std::shared_ptr<ShaderResourceView> CreateShaderResourceView(const std::shared_ptr<Resource>& resource, const D3D12_SHADER_RESOURCE_VIEW_DESC* srv = nullptr);
 
-      //std::shared_ptr<UnorderedAccessView>
-      //   CreateUnorderedAccessView(const std::shared_ptr<Resource>& resource,
-      //      const std::shared_ptr<Resource>& counterResource = nullptr,
-      //      const D3D12_UNORDERED_ACCESS_VIEW_DESC* uav = nullptr);
+      std::shared_ptr<UnorderedAccessView>
+         CreateUnorderedAccessView(const std::shared_ptr<Resource>& resource,
+            const std::shared_ptr<Resource>& counterResource = nullptr,
+            const D3D12_UNORDERED_ACCESS_VIEW_DESC* uav = nullptr);
 
       /**
        * Flush all command queues.

@@ -1,43 +1,3 @@
-//#pragma once
-//
-///*
-// *  Copyright(c) 2018 Jeremiah van Oosten
-// *
-// *  Permission is hereby granted, free of charge, to any person obtaining a copy
-// *  of this software and associated documentation files(the "Software"), to deal
-// *  in the Software without restriction, including without limitation the rights
-// *  to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
-// *  copies of the Software, and to permit persons to whom the Software is
-// *  furnished to do so, subject to the following conditions :
-// *
-// *  The above copyright notice and this permission notice shall be included in
-// *  all copies or substantial portions of the Software.
-// *
-// *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
-// *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-// *  IN THE SOFTWARE.
-// */
-//
-//#include <DirectXMath.h>
-//#include <d3d12.h>
-//
-//#include "Defines.h"
-//#include "ResourceStateTracker.h"
-//#include "DynamicDescriptorHeap.h"
-//#include "VertexBuffer.h"
-//#include "IndexBuffer.h"
-//#include <wrl.h>
-//
-//#include <functional>  // For std::function
-//#include <map>         // for std::map
-//#include <memory>      // for std::unique_ptr
-//#include <mutex>       // for std::mutex
-//#include <vector>      // for std::vector
-
 #pragma once
 
 /*
@@ -71,7 +31,7 @@
   *  The CommandList class provides additional functionality that makes working with
   *  DirectX 12 applications easier.
   */
-  //#include "VertexTypes.h"
+#include "VertexTypes.h"
 
 #include <DirectXMath.h>
 #include <d3d12.h>
@@ -83,21 +43,13 @@
 #include <mutex>       // for std::mutex
 #include <vector>      // for std::vector
 
-
-#include "Defines.h"
-#include "ResourceStateTracker.h"
-#include "DynamicDescriptorHeap.h"
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
-#include <wrl.h>
-
 class Buffer;
 class ByteAddressBuffer;
 class ConstantBuffer;
 class ConstantBufferView;
 class Device;
 class DynamicDescriptorHeap;
-//class GenerateMipsPSO;
+class GenerateMipsPSO;
 class IndexBuffer;
 //class PanoToCubemapPSO;
 class PipelineStateObject;
@@ -222,10 +174,10 @@ public:
       return CopyIndexBuffer(indexBufferData.size(), indexFormat, indexBufferData.data());
    }
 
-   ///**
-   // * Copy the contents to a constant buffer in GPU memory.
-   // */
-   //std::shared_ptr<ConstantBuffer> CopyConstantBuffer(size_t bufferSize, const void* bufferData);
+   /**
+    * Copy the contents to a constant buffer in GPU memory.
+    */
+   std::shared_ptr<ConstantBuffer> CopyConstantBuffer(size_t bufferSize, const void* bufferData);
 
    template<typename T>
    std::shared_ptr<ConstantBuffer> CopyConstantBuffer(const T& data)
@@ -236,7 +188,7 @@ public:
    /**
     * Copy the contents to a byte address buffer in GPU memory.
     */
-   //std::shared_ptr<ByteAddressBuffer> CopyByteAddressBuffer(size_t bufferSize, const void* bufferData);
+   std::shared_ptr<ByteAddressBuffer> CopyByteAddressBuffer(size_t bufferSize, const void* bufferData);
    template<typename T>
    std::shared_ptr<ByteAddressBuffer> CopyByteAddressBuffer(const T& data)
    {
@@ -246,8 +198,8 @@ public:
    /**
     * Copy the contents to a structured buffer in GPU memory.
     */
-   //std::shared_ptr<StructuredBuffer> CopyStructuredBuffer(size_t numElements, size_t elementSize,
-   //   const void* bufferData);
+   std::shared_ptr<StructuredBuffer> CopyStructuredBuffer(size_t numElements, size_t elementSize,
+      const void* bufferData);
    template<typename T>
    std::shared_ptr<StructuredBuffer> CopyStructuredBuffer(const std::vector<T>& bufferData)
    {
@@ -262,7 +214,7 @@ public:
    /**
     * Load a texture by a filename.
     */
-   //std::shared_ptr<Texture> LoadTextureFromFile(const std::wstring& fileName, bool sRGB = false);
+   std::shared_ptr<Texture> LoadTextureFromFile(const std::wstring& fileName, bool sRGB = false);
 
    /**
     * Load a scene file.
@@ -270,9 +222,9 @@ public:
     * @param fileName The path to the scene file definition.
     * @param [loadingProgress] An optional callback function that can be used to report loading progress.
     */
-   //std::shared_ptr<Scene>
-   //   LoadSceneFromFile(const std::wstring& fileName,
-   //      const std::function<bool(float)>& loadingProgres = std::function<bool(float)>());
+   std::shared_ptr<Scene>
+      LoadSceneFromFile(const std::wstring& fileName,
+         const std::function<bool(float)>& loadingProgres = std::function<bool(float)>());
 
    /**
     * Load a scene from a string.
@@ -282,7 +234,7 @@ public:
     *
     * @see https://www.fileformat.info/format/nff/egff.htm
     */
-   //std::shared_ptr<Scene> LoadSceneFromString(const std::string& sceneString, const std::string& format);
+   std::shared_ptr<Scene> LoadSceneFromString(const std::string& sceneString, const std::string& format);
 
    /**
     * Create a cube.
@@ -290,7 +242,7 @@ public:
     * @param size The size of one side of the cube.
     * @param reverseWinding Whether to reverse the winding order of the triangles (useful for skyboxes).
     */
-   //std::shared_ptr<Scene> CreateCube(float size = 1.0, bool reverseWinding = false);
+   std::shared_ptr<Scene> CreateCube(float size = 1.0, bool reverseWinding = false);
 
    /**
     * Create a sphere.
@@ -299,7 +251,7 @@ public:
     * @param tessellation Determines how smooth the sphere is.
     * @param reverseWinding Whether to reverse the winding order of the triangles (useful for sydomes).
     */
-   //std::shared_ptr<Scene> CreateSphere(float radius = 0.5f, uint32_t tessellation = 16, bool reversWinding = false);
+   std::shared_ptr<Scene> CreateSphere(float radius = 0.5f, uint32_t tessellation = 16, bool reversWinding = false);
 
    /**
     * Create a Cylinder
@@ -309,8 +261,8 @@ public:
     * @param tessellation How smooth the cylinder will be.
     * @param reverseWinding Whether to reverse the winding order of the triangles.
     */
-   //std::shared_ptr<Scene> CreateCylinder(float radius = 0.5f, float height = 1.0f, uint32_t tessellation = 32,
-   //   bool reverseWinding = false);
+   std::shared_ptr<Scene> CreateCylinder(float radius = 0.5f, float height = 1.0f, uint32_t tessellation = 32,
+      bool reverseWinding = false);
 
    /**
     * Create a cone.
@@ -320,8 +272,8 @@ public:
     * @param tessellation How smooth to make the cone.
     * @param reverseWinding Whether to reverse the winding order of the triangles.
     */
-   //std::shared_ptr<Scene> CreateCone(float radius = 0.5f, float height = 1.0f, uint32_t tessellation = 32,
-   //   bool reverseWinding = false);
+   std::shared_ptr<Scene> CreateCone(float radius = 0.5f, float height = 1.0f, uint32_t tessellation = 32,
+      bool reverseWinding = false);
 
    /**
     * Create a torus.
@@ -331,8 +283,8 @@ public:
     * @param tessellation The smoothness of the torus.
     * @param reverseWinding Reverse the winding order of the vertices.
     */
-   //std::shared_ptr<Scene> CreateTorus(float radius = 0.5f, float thickness = 0.333f, uint32_t tessellation = 32,
-   //   bool reverseWinding = false);
+   std::shared_ptr<Scene> CreateTorus(float radius = 0.5f, float thickness = 0.333f, uint32_t tessellation = 32,
+      bool reverseWinding = false);
 
    /**
     * Create a plane.
@@ -341,7 +293,7 @@ public:
     * @param height The height of the plane.
     * @reverseWinding Whether to reverse the winding order of the plane.
     */
-   //std::shared_ptr<Scene> CreatePlane(float width = 1.0f, float height = 1.0f, bool reverseWinding = false);
+   std::shared_ptr<Scene> CreatePlane(float width = 1.0f, float height = 1.0f, bool reverseWinding = false);
 
    /**
     * Clear a texture.
@@ -359,7 +311,7 @@ public:
     * The first subresource is used to generate the mip chain.
     * Mips are automatically generated for textures loaded from files.
     */
-   //void GenerateMips(const std::shared_ptr<Texture>& texture);
+   void GenerateMips(const std::shared_ptr<Texture>& texture);
 
    /**
     * Generate a cubemap texture from a panoramic (equirectangular) texture.
@@ -476,16 +428,16 @@ public:
     * Set the current root signature on the command list.
     */
    void SetGraphicsRootSignature(const std::shared_ptr<RootSignature>& rootSignature);
-   //void SetComputeRootSignature(const std::shared_ptr<RootSignature>& rootSignature);
+   void SetComputeRootSignature(const std::shared_ptr<RootSignature>& rootSignature);
 
    /**
     * Set an inline CBV.
     *
     * Note: Only ConstantBuffer's can be used with inline CBV's.
     */
-   //void SetConstantBufferView(uint32_t rootParameterIndex, const std::shared_ptr<ConstantBuffer>& buffer,
-   //   D3D12_RESOURCE_STATES stateAfter = D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER,
-   //   size_t                bufferOffset = 0);
+   void SetConstantBufferView(uint32_t rootParameterIndex, const std::shared_ptr<ConstantBuffer>& buffer,
+      D3D12_RESOURCE_STATES stateAfter = D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER,
+      size_t                bufferOffset = 0);
 
    /**
     * Set an inline SRV.
@@ -508,46 +460,46 @@ public:
    /**
     * Set the CBV on the rendering pipeline.
     */
-   //void SetConstantBufferView(uint32_t rootParameterIndex, uint32_t descriptorOffset,
-   //   const std::shared_ptr<ConstantBufferView>& cbv,
-   //   D3D12_RESOURCE_STATES stateAfter = D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER);
+   void SetConstantBufferView(uint32_t rootParameterIndex, uint32_t descriptorOffset,
+      const std::shared_ptr<ConstantBufferView>& cbv,
+      D3D12_RESOURCE_STATES stateAfter = D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER);
 
    /**
     * Set the SRV on the graphics pipeline.
     */
-   //void SetShaderResourceView(uint32_t rootParameterIndex, uint32_t descriptorOffset,
-   //   const std::shared_ptr<ShaderResourceView>& srv,
-   //   D3D12_RESOURCE_STATES stateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE |
-   //   D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE,
-   //   UINT firstSubresource = 0,
-   //   UINT numSubresources = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
+   void SetShaderResourceView(uint32_t rootParameterIndex, uint32_t descriptorOffset,
+      const std::shared_ptr<ShaderResourceView>& srv,
+      D3D12_RESOURCE_STATES stateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE |
+      D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE,
+      UINT firstSubresource = 0,
+      UINT numSubresources = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
 
    /**
     * Set an SRV on the graphics pipeline using the default SRV for the texture.
     */
-   //void SetShaderResourceView(int32_t rootParameterIndex, uint32_t descriptorOffset,
-   //   const std::shared_ptr<Texture>& texture,
-   //   D3D12_RESOURCE_STATES stateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE |
-   //   D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE,
-   //   UINT firstSubresource = 0,
-   //   UINT numSubresources = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
+   void SetShaderResourceView(int32_t rootParameterIndex, uint32_t descriptorOffset,
+      const std::shared_ptr<Texture>& texture,
+      D3D12_RESOURCE_STATES stateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE |
+      D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE,
+      UINT firstSubresource = 0,
+      UINT numSubresources = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
    /**
     * Set the UAV on the graphics pipeline.
     */
-   //void SetUnorderedAccessView(uint32_t rootParameterIndex, uint32_t descriptorOffset,
-   //   const std::shared_ptr<UnorderedAccessView>& uav,
-   //   D3D12_RESOURCE_STATES stateAfter = D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
-   //   UINT                  firstSubresource = 0,
-   //   UINT                  numSubresources = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
+   void SetUnorderedAccessView(uint32_t rootParameterIndex, uint32_t descriptorOffset,
+      const std::shared_ptr<UnorderedAccessView>& uav,
+      D3D12_RESOURCE_STATES stateAfter = D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
+      UINT                  firstSubresource = 0,
+      UINT                  numSubresources = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
 
    /**
     * Set the UAV on the graphics pipline using a specific mip of the texture.
     */
-   //void SetUnorderedAccessView(uint32_t rootParameterIndex, uint32_t descriptorOffset,
-   //   const std::shared_ptr<Texture>& texture, UINT mip,
-   //   D3D12_RESOURCE_STATES stateAfter = D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
-   //   UINT                  firstSubresource = 0,
-   //   UINT                  numSubresources = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
+   void SetUnorderedAccessView(uint32_t rootParameterIndex, uint32_t descriptorOffset,
+      const std::shared_ptr<Texture>& texture, UINT mip,
+      D3D12_RESOURCE_STATES stateAfter = D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
+      UINT                  firstSubresource = 0,
+      UINT                  numSubresources = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES);
 
    /**
     * Set the render targets for the graphics rendering pipeline.
@@ -612,23 +564,23 @@ protected:
 
 private:
    // Used for procedural mesh generation.
-   //using VertexCollection = std::vector<VertexPositionNormalTangentBitangentTexture>;
-   //using IndexCollection = std::vector<uint16_t>;
+   using VertexCollection = std::vector<VertexPositionNormalTangentBitangentTexture>;
+   using IndexCollection = std::vector<uint16_t>;
 
-   //// Create a scene that contains a single node with a single mesh.
-   //std::shared_ptr<Scene> CreateScene(const VertexCollection& vertices, const IndexCollection& indicies);
+   // Create a scene that contains a single node with a single mesh.
+   std::shared_ptr<Scene> CreateScene(const VertexCollection& vertices, const IndexCollection& indicies);
 
-   //// Helper function for flipping winding of geometric primitives for LH vs. RH coords
-   //inline void ReverseWinding(IndexCollection& indices, VertexCollection& vertices);
-   //// Helper function for inverting normals for "inside" vs "outside" viewing.
-   //inline void CommandList::InvertNormals(VertexCollection& vertices);
-   //// Helper function to compute a point on a unit circle aligned to the x,z plane and centered at the origin.
-   //inline DirectX::XMVECTOR GetCircleVector(size_t i, size_t tessellation) noexcept;
-   //// Helper function to compute a tangent vector at a point on a unit sphere aligned to the x,z plane.
-   //inline DirectX::XMVECTOR GetCircleTangent(size_t i, size_t tessellation) noexcept;
-   //// Helper creates a triangle fan to close the end of a cylinder / cone
-   //void CreateCylinderCap(VertexCollection& vertices, IndexCollection& indices, size_t tessellation, float height,
-   //   float radius, bool isTop);
+   // Helper function for flipping winding of geometric primitives for LH vs. RH coords
+   inline void ReverseWinding(IndexCollection& indices, VertexCollection& vertices);
+   // Helper function for inverting normals for "inside" vs "outside" viewing.
+   inline void CommandList::InvertNormals(VertexCollection& vertices);
+   // Helper function to compute a point on a unit circle aligned to the x,z plane and centered at the origin.
+   inline DirectX::XMVECTOR GetCircleVector(size_t i, size_t tessellation) noexcept;
+   // Helper function to compute a tangent vector at a point on a unit sphere aligned to the x,z plane.
+   inline DirectX::XMVECTOR GetCircleTangent(size_t i, size_t tessellation) noexcept;
+   // Helper creates a triangle fan to close the end of a cylinder / cone
+   void CreateCylinderCap(VertexCollection& vertices, IndexCollection& indices, size_t tessellation, float height,
+      float radius, bool isTop);
 
    // Add a resource to a list of tracked resources (ensures lifetime while command list is in-flight on a command
    // queue.
@@ -636,7 +588,7 @@ private:
    void TrackResource(const std::shared_ptr<Resource>& res);
 
    // Generate mips for UAV compatible textures.
-   //void GenerateMips_UAV(const std::shared_ptr<Texture>& texture, bool isSRGB);
+   void GenerateMips_UAV(const std::shared_ptr<Texture>& texture, bool isSRGB);
 
    // Copy the contents of a CPU buffer to a GPU buffer (possibly replacing the previous buffer contents).
    Microsoft::WRL::ComPtr<ID3D12Resource> CopyBuffer(size_t bufferSize, const void* bufferData,
@@ -682,7 +634,7 @@ private:
    ID3D12DescriptorHeap* m_DescriptorHeaps[D3D12_DESCRIPTOR_HEAP_TYPE_NUM_TYPES];
 
    // Pipeline state object for Mip map generation.
-   //std::unique_ptr<GenerateMipsPSO> m_GenerateMipsPSO;
+   std::unique_ptr<GenerateMipsPSO> m_GenerateMipsPSO;
    // Pipeline state object for converting panorama (equirectangular) to cubemaps
    //std::unique_ptr<PanoToCubemapPSO> m_PanoToCubemapPSO;
 
@@ -700,49 +652,49 @@ private:
    static std::mutex                              ms_TextureCacheMutex;
 };
 
-//// Definition for inline functions.
-//inline DirectX::XMVECTOR CommandList::GetCircleVector(size_t i, size_t tessellation) noexcept
-//{
-//   float angle = float(i) * DirectX::XM_2PI / float(tessellation);
-//   float dx, dz;
+// Definition for inline functions.
+inline DirectX::XMVECTOR CommandList::GetCircleVector(size_t i, size_t tessellation) noexcept
+{
+   float angle = float(i) * DirectX::XM_2PI / float(tessellation);
+   float dx, dz;
 
-//   DirectX::XMScalarSinCos(&dx, &dz, angle);
+   DirectX::XMScalarSinCos(&dx, &dz, angle);
 
-//   DirectX::XMVECTORF32 v = { { { dx, 0, dz, 0 } } };
-//   return v;
-//}
+   DirectX::XMVECTORF32 v = { { { dx, 0, dz, 0 } } };
+   return v;
+}
 
-//inline DirectX::XMVECTOR CommandList::GetCircleTangent(size_t i, size_t tessellation) noexcept
-//{
-//   float angle = (float(i) * DirectX::XM_2PI / float(tessellation)) + DirectX::XM_PIDIV2;
-//   float dx, dz;
+inline DirectX::XMVECTOR CommandList::GetCircleTangent(size_t i, size_t tessellation) noexcept
+{
+   float angle = (float(i) * DirectX::XM_2PI / float(tessellation)) + DirectX::XM_PIDIV2;
+   float dx, dz;
 
-//   DirectX::XMScalarSinCos(&dx, &dz, angle);
+   DirectX::XMScalarSinCos(&dx, &dz, angle);
 
-//   DirectX::XMVECTORF32 v = { { { dx, 0, dz, 0 } } };
-//   return v;
-//}
+   DirectX::XMVECTORF32 v = { { { dx, 0, dz, 0 } } };
+   return v;
+}
 
-//inline void CommandList::ReverseWinding(IndexCollection& indices, VertexCollection& vertices)
-//{
-//   assert((indices.size() % 3) == 0);
-//   for (auto it = indices.begin(); it != indices.end(); it += 3)
-//   {
-//      std::swap(*it, *(it + 2));
-//   }
+inline void CommandList::ReverseWinding(IndexCollection& indices, VertexCollection& vertices)
+{
+   assert((indices.size() % 3) == 0);
+   for (auto it = indices.begin(); it != indices.end(); it += 3)
+   {
+      std::swap(*it, *(it + 2));
+   }
 
-//   for (auto it = vertices.begin(); it != vertices.end(); ++it)
-//   {
-//      it->TexCoord.x = (1.f - it->TexCoord.x);
-//   }
-//}
+   for (auto it = vertices.begin(); it != vertices.end(); ++it)
+   {
+      it->TexCoord.x = (1.f - it->TexCoord.x);
+   }
+}
 
-//inline void CommandList::InvertNormals(VertexCollection& vertices)
-//{
-//   for (auto it = vertices.begin(); it != vertices.end(); ++it)
-//   {
-//      it->Normal.x = -it->Normal.x;
-//      it->Normal.y = -it->Normal.y;
-//      it->Normal.z = -it->Normal.z;
-//   }
-//}
+inline void CommandList::InvertNormals(VertexCollection& vertices)
+{
+   for (auto it = vertices.begin(); it != vertices.end(); ++it)
+   {
+      it->Normal.x = -it->Normal.x;
+      it->Normal.y = -it->Normal.y;
+      it->Normal.z = -it->Normal.z;
+   }
+}
